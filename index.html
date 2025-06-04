@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimarket Puzzle Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>🏪 Minimarket Puzzle Game - Step Tracker</h1>
+
+        <!-- Header Controls -->
+        <div class="header-controls">
+            <div class="control-group">
+                <label for="trolleyCapacity">🛒 Kapasitas Trolley:</label>
+                <input type="number" id="trolleyCapacity" min="1" max="10" value="2">
+                <small style="color: #aaa;">Max barang per trip</small>
+            </div>
+
+            <div class="control-group">
+                <label for="itemCount">📦 Jumlah Barang:</label>
+                <input type="number" id="itemCount" min="5" max="50" value="12">
+                <small style="color: #aaa;">Total barang untuk disortir</small>
+            </div>
+
+            <div class="control-group">
+                <label for="difficulty">🎯 Tingkat Kesulitan:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy (5-8 rak)</option>
+                    <option value="medium" selected>Medium (5-10 rak)</option>
+                    <option value="hard">Hard (8-12 rak)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Generation Controls -->
+        <div class="controls">
+            <button onclick="generateRandomData()" class="btn-generate">🎲 Generate Random Data</button>
+            <button onclick="resetToDefault()" class="btn-reset">🔄 Reset to Default</button>
+            <button onclick="applySettings()">⚙️ Apply Settings</button>
+        </div>
+
+        <!-- Data Preview -->
+        <div class="data-preview" id="dataPreview">
+            <div class="preview-section">
+                <strong>📋 Current Data:</strong>
+                <div id="currentDataInfo">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Alert Area -->
+        <div id="alertArea"></div>
+
+        <div class="main-layout">
+            <div class="game-section">
+                <div class="game-layout">
+                    <div class="left-panel">
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div>Trip: <span id="tripCount">0</span></div>
+                            </div>
+                            <div class="stat-item">
+                                <div>Steps: <span id="stepCount">0</span></div>
+                            </div>
+                            <div class="stat-item">
+                                <div>Trolley: <span id="trolleyCount">0</span>/<span id="maxCapacity">2</span></div>
+                            </div>
+                            <div class="stat-item">
+                                <div>Remaining: <span id="remainingCount">12</span></div>
+                            </div>
+                        </div>
+
+                        <div class="grid-container">
+                            <div class="grid" id="gameGrid"></div>
+                        </div>
+
+                        <div class="controls">
+                            <button onclick="startOptimalGame()" id="optimalBtn">🎯 Optimal Strategy</button>
+                            <button onclick="startGreedyGame()" id="greedyBtn">🔥 Greedy Strategy</button>
+                            <button onclick="runComparison()" id="compareBtn">📊 Compare Both</button>
+                            <button onclick="resetGame()">🔄 Reset Game</button>
+                        </div>
+                    </div>
+
+                    <div class="right-panel">
+                        <!-- Worker Information -->
+                        <div class="worker-info">
+                            <h4>👤 Worker Status</h4>
+                            <div>📍 Position: (<span id="workerX">0</span>, <span id="workerY">0</span>)</div>
+                            <div>🚶 Current Step: <span id="currentStep">0</span></div>
+                            <div>🎯 Target: <span id="currentTarget">Start</span></div>
+
+                            <div class="worker-items">
+                                <strong>🛒 Carrying Items:</strong>
+                                <div id="workerItems">No items</div>
+                            </div>
+                        </div>
+
+                        <div class="trolley-display">
+                            <h4>🛒 Trolley Contents:</h4>
+                            <div id="trolleyItems">Empty</div>
+                        </div>
+
+                        <div class="remaining-items">
+                            <h4>📦 Remaining Items:</h4>
+                            <div id="remainingItems"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel">
+                <!-- Step Controls -->
+                <div class="step-controls">
+                    <h4>🎮 Step-by-Step Control</h4>
+
+                    <div class="step-nav">
+                        <button onclick="previousStep()" id="prevBtn" class="btn-step">⬅️ Prev</button>
+                        <div class="step-info">
+                            <div>Step <span id="stepNumber">0</span> / <span id="totalSteps">0</span></div>
+                        </div>
+                        <button onclick="nextStep()" id="nextBtn" class="btn-step">➡️ Next</button>
+                    </div>
+
+                    <div style="text-align: center; margin: 10px 0;">
+                        <button onclick="playAllSteps()" id="playBtn" class="btn-step">▶️ Play All</button>
+                        <button onclick="pauseSteps()" id="pauseBtn" class="btn-step">⏸️ Pause</button>
+                        <button onclick="resetSteps()" id="resetStepsBtn" class="btn-step">🔄 Reset Steps</button>
+                    </div>
+
+                    <div class="step-info">
+                        <div id="stepDescription">Select a strategy to start</div>
+                    </div>
+                </div>
+
+                <div class="log" id="gameLog"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="minimarket-game.js"></script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
